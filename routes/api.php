@@ -19,7 +19,7 @@ use App\Http\Controllers\JWTController;
 //     return $request->user();
 // });
 
-Route::group(['middleware' => 'api'], function($router) {
+Route::group(['prefix' => 'users'], function($router) {
     // Route::post('/register', "JWTController@register"); //Asi se declara en laravel 7
     Route::post('/register', [JWTController::class, 'register']); //Asi se declara en laravel 8 para adelante
     Route::post('/login', [JWTController::class, 'login']);

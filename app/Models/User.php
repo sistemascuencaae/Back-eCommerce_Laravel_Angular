@@ -21,11 +21,23 @@ class User extends Authenticatable implements JWTSubject
      */
     protected $fillable = [
         'name',
+        'surname',
+        'type_user',
+        'state',
+        'role_id',
         'email',
         'password',
     ];
 
-/**
+    public function setPasswordAttribute($password)
+    {
+        if ($password) { //Solo si existe un password
+            $this->attributes["password"] = bcrypt($password); //Sirve para encriptar el BCRYPT
+        }
+
+    }
+
+    /**
      * Get the identifier that will be stored in the subject claim of the JWT.
      *
      * @return mixed
@@ -33,6 +45,12 @@ class User extends Authenticatable implements JWTSubject
     public function getJWTIdentifier()
     {
         return $this->getKey();
+    }
+
+    // Relacion de uno a uno (usuario con el rol)
+    public function role()
+    {
+        return $this->belongsTo(Role::class);
     }
 
     /**
@@ -63,4 +81,17 @@ class User extends Authenticatable implements JWTSubject
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function scopefilterAdvance($query, $state, $search)
+    {
+        if ($state) {
+            $query->where("state", $state);
+        }
+        if ($search) {
+            $query->where("name", "like", "%" . $search . "%")
+                ->orWhere("surname", "like", "%" . $search . "%");
+        }
+        return $query;
+    }
+
 }

@@ -7,6 +7,7 @@ use App\Http\Controllers\Product\CategorieController;
 use App\Http\Controllers\Product\ProductGController;
 use App\Http\Controllers\Product\ProductImagensController;
 use App\Http\Controllers\Product\ProductSizeColorController;
+use App\Http\Controllers\Slider\SliderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -68,4 +69,11 @@ Route::group(['prefix' => 'products'], function ($router) {
         Route::put('/update/{id}', [ProductSizeColorController::class, 'update']);
         Route::delete('/delete/{id}', [ProductSizeColorController::class, 'destroy']);
     });
+});
+
+Route::group(['prefix' => 'sliders'], function ($router) {
+    Route::get('/all', [SliderController::class, 'index']);
+    Route::post('/add', [SliderController::class, 'store']);
+    Route::post('/update/{id}', [SliderController::class, 'update']);
+    Route::delete('/delete/{id}', [SliderController::class, 'destroy']);
 });

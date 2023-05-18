@@ -26,7 +26,8 @@ class ProductCResouce extends JsonResource
             "slug" => $this->resource->slug,
             "sku" => $this->resource->sku,
             "tags" => $this->resource->tags,
-            "tags_a" => $this->resource->tags ? explode(",", $this->resource->tags) : [], //Convertir el string en un array 
+            "tags_a" => $this->resource->tags ? explode(",", $this->resource->tags) : [],
+            //Convertir el string en un array 
             "price_soles" => $this->resource->price_soles,
             "price_usd" => $this->resource->price_usd,
             "resumen" => $this->resource->resumen,
@@ -45,6 +46,24 @@ class ProductCResouce extends JsonResource
                     "type" => $img->type,
                 ];
             }),
+
+            "sizes" => $this->resource->sizes
+                ->map(function ($size) {
+                    return [
+                        "id" => $size->id,
+                        "name" => $size->name,
+                        "variaciones" => $size->product_size_colors
+                            ->map(function ($var) {
+                                        return [
+                                            "id" => $var->id,
+                                            "product_color_id" => $var->product_color_id,
+                                            "product_color" => $var->product_color,
+                                            "stock" => $var->stock,
+                                        ];
+                                    }),
+                        "total" => $size->product_size_colors->sum("stock"),
+                    ];
+                }),
         ];
     }
 }

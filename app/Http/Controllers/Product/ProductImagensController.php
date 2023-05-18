@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Product;
 
 use App\Http\Controllers\Controller;
 use App\Models\Models\Product\ProductImage;
+use App\Models\Models\Product\ProductSize;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 

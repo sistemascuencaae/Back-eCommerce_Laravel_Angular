@@ -7,7 +7,10 @@ use App\Http\Resources\Product\ProductCCollection;
 use App\Http\Resources\Product\ProductCResouce;
 use App\Models\Models\Product\Categorie;
 use App\Models\Models\Product\Product;
+use App\Models\Models\Product\ProductColor;
+use App\Models\Models\Product\ProductColorSize;
 use App\Models\Models\Product\ProductImage;
+use App\Models\Models\Product\ProductSize;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -18,11 +21,7 @@ class ProductGController extends Controller
     {
         $this->middleware('auth:api'); //Cualquier user tiene que estar eutenticado
     }
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index(Request $request)
     {
         $search = $request->search;
@@ -38,11 +37,6 @@ class ProductGController extends Controller
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         //
@@ -51,15 +45,18 @@ class ProductGController extends Controller
     public function get_info_categories()
     {
         $categories = Categorie::orderBy("id", "desc")->get();
-        return response()->json(["categories" => $categories]);
+
+        $products_colors = ProductColor::orderBy("id", "desc")->get();
+
+        $products_color_sizes = ProductSize::orderBy("id", "desc")->get();
+
+        return response()->json([
+            "categories" => $categories,
+            "products_colors" => $products_colors,
+            "products_color_sizes" => $products_color_sizes,
+        ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $is_exists_product = Product::where("tittle", $request->tittle)->first(); //Si el producto ya existe
@@ -100,12 +97,6 @@ class ProductGController extends Controller
         return response()->json(["message" => 200]);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
         $product = Product::findOrFail($id);
@@ -115,24 +106,11 @@ class ProductGController extends Controller
         ]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         $is_exists_product = Product::where("id", "<>", $id)
@@ -155,12 +133,6 @@ class ProductGController extends Controller
         return response()->json(["message" => 200]);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         //

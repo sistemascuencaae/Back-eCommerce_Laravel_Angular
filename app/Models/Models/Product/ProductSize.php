@@ -33,4 +33,9 @@ class ProductSize extends Model
     {
         return $this->belongsTo(Product::class);
     }
+
+    public function product_size_colors()
+    {
+        return $this->hasMany(ProductColorSize::class); //hasMany de 1 a muchos
+    }
 }

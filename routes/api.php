@@ -6,6 +6,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\Product\CategorieController;
 use App\Http\Controllers\Product\ProductGController;
 use App\Http\Controllers\Product\ProductImagensController;
+use App\Http\Controllers\Product\ProductSizeColorController;
 
 /*
 |--------------------------------------------------------------------------
@@ -57,5 +58,14 @@ Route::group(['prefix' => 'products'], function ($router) {
     Route::group(['prefix' => 'imgs'], function () {
         Route::post('/add', [ProductImagensController::class, 'store']);
         Route::delete('/delete/{id}', [ProductImagensController::class, 'destroy']);
+    });
+
+    Route::group(['prefix' => 'inventario'], function () {
+        Route::post('/add', [ProductSizeColorController::class, 'store']);
+        Route::put('/update_size/{id}', [ProductSizeColorController::class, 'update_size']);
+        Route::delete('/delete_size/{id}', [ProductSizeColorController::class, 'destroy_size']);
+        // Rutas de las sub dimensiones o sub inventarios
+        Route::put('/update/{id}', [ProductSizeColorController::class, 'update']);
+        Route::delete('/delete/{id}', [ProductSizeColorController::class, 'destroy']);
     });
 });

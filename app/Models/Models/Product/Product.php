@@ -25,6 +25,7 @@ class Product extends Model
         "state",
         "imagen",
         "stock",
+        "type_inventario",
     ];
 
     public function setCreatedAtAttribute($value)

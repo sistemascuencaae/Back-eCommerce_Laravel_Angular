@@ -62,7 +62,31 @@ class ProductSizeColorController extends Controller
 
         return response()->json([
             "message" => 200,
-            "product_size_color" => $product_size_color
+
+
+
+            
+            // *-*-*-*-*-*-*-*-*-*-*-*-*-
+            "product_size_color" => [
+                "id" => $product_size->id,
+                "name" => $product_size->name,
+                "variaciones" => $product_size->product_size_colors
+                    ->map(function ($var) {
+                        return [
+                            "id" => $var->id,
+                            "product_color_id" => $var->product_color_id,
+                            "product_color" => $var->product_color,
+                            "stock" => $var->stock,
+                        ];
+                    }),
+                "total" => $product_size->product_size_colors->sum("stock"),
+            ]
+       
+       
+       
+       
+       
+       
         ]);
     }
 

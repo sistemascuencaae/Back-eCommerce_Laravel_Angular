@@ -62,11 +62,6 @@ class ProductSizeColorController extends Controller
 
         return response()->json([
             "message" => 200,
-
-
-
-            
-            // *-*-*-*-*-*-*-*-*-*-*-*-*-
             "product_size_color" => [
                 "id" => $product_size->id,
                 "name" => $product_size->name,
@@ -81,12 +76,6 @@ class ProductSizeColorController extends Controller
                     }),
                 "total" => $product_size->product_size_colors->sum("stock"),
             ]
-       
-       
-       
-       
-       
-       
         ]);
     }
 

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Cupones\CuponesController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\JWTController;
 use App\Http\Controllers\UserController;
@@ -76,4 +77,13 @@ Route::group(['prefix' => 'sliders'], function ($router) {
     Route::post('/add', [SliderController::class, 'store']);
     Route::post('/update/{id}', [SliderController::class, 'update']);
     Route::delete('/delete/{id}', [SliderController::class, 'destroy']);
+});
+
+Route::group(['prefix' => 'cupones'], function ($router) {
+    Route::get('/all', [CuponesController::class, 'index']);
+    Route::get('/config_all', [CuponesController::class, 'config_all']);
+    Route::post('/add', [CuponesController::class, 'store']);
+    Route::post('/update/{id}', [CuponesController::class, 'update']);
+    Route::delete('/delete/{id}', [CuponesController::class, 'destroy']);
+    Route::get('/show/{id}', [CuponesController::class, 'show']);
 });

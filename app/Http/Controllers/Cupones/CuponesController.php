@@ -10,6 +10,10 @@ use Illuminate\Http\Request;
 
 class CuponesController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:api'); //Cualquier user tiene que estar eutenticado
+    }
     public function index(Request $request)
     {
         $cupones = Cupone::where("code", "like", "%" . $request->search . "%")

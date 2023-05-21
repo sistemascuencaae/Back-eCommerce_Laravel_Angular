@@ -1,7 +1,8 @@
 <?php
 
-use App\Http\Controllers\Cupones\CuponesController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Cupones\CuponesController;
+use App\Http\Controllers\Discount\DiscountController;
 use App\Http\Controllers\JWTController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\Product\CategorieController;
@@ -86,4 +87,12 @@ Route::group(['prefix' => 'cupones'], function ($router) {
     Route::post('/update/{id}', [CuponesController::class, 'update']);
     Route::delete('/delete/{id}', [CuponesController::class, 'destroy']);
     Route::get('/show/{id}', [CuponesController::class, 'show']);
+});
+
+Route::group(['prefix' => 'descuentos'], function ($router) {
+    Route::get("/all", [DiscountController::class, 'index']);
+    Route::get("/show/{id}", [DiscountController::class, 'show']);
+    Route::post("/add", [DiscountController::class, 'store']);
+    Route::put("/update/{id}", [DiscountController::class, 'update']);
+    Route::delete("/delete/{id}", [DiscountController::class, 'destroy']);
 });

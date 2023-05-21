@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Ecommerce\Cart\CartShopController;
+use App\Http\Controllers\Ecommerce\HomeController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Cupones\CuponesController;
 use App\Http\Controllers\Discount\DiscountController;
@@ -10,17 +12,6 @@ use App\Http\Controllers\Product\ProductGController;
 use App\Http\Controllers\Product\ProductImagensController;
 use App\Http\Controllers\Product\ProductSizeColorController;
 use App\Http\Controllers\Slider\SliderController;
-
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| is assigned the "api" middleware group. Enjoy building your API!
-|
-*/
 
 // Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //     return $request->user();
@@ -95,4 +86,14 @@ Route::group(['prefix' => 'descuentos'], function ($router) {
     Route::post("/add", [DiscountController::class, 'store']);
     Route::put("/update/{id}", [DiscountController::class, 'update']);
     Route::delete("/delete/{id}", [DiscountController::class, 'destroy']);
+});
+
+Route::group(["prefix" => "ecommerce"], function ($router) {
+    Route::get("home", [HomeController::class, 'home']);
+    Route::get("detail-product/{slug}", [HomeController::class, 'detail_product']);
+
+    Route::group(["prefix" => "cart"], function () {
+        Route::resource("add", CartShopController::class);
+        Route::get("applycupon/{cupon}", [CartShopController::class, 'apply_cupon']);
+    });
 });

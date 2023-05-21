@@ -158,6 +158,7 @@ class JWTController extends Controller
             'expires_in' => auth('api')->factory()->getTTL() * 60,
             //Enviar datos del user autenticado
             "user" => [
+                "id" => $user->id,
                 "name" => $user->name,
                 "surname" => $user->surname,
                 "email" => $user->email,

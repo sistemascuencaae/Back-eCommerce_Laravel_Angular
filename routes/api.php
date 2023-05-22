@@ -5,6 +5,7 @@ use App\Http\Controllers\Ecommerce\HomeController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Cupones\CuponesController;
 use App\Http\Controllers\Discount\DiscountController;
+use App\Http\Controllers\Ecommerce\Client\AddressUserController;
 use App\Http\Controllers\JWTController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\Product\CategorieController;
@@ -96,4 +97,11 @@ Route::group(["prefix" => "ecommerce"], function ($router) {
         Route::resource("add", CartShopController::class);
         Route::get("applycupon/{cupon}", [CartShopController::class, 'apply_cupon']);
     });
+
+    Route::group(["prefix" => "checkout"], function () {
+        Route::resource("address_user", AddressUserController::class);
+        // Route::post("sale", "Ecommerce\Sale\SaleController@store");
+        // Route::post("sale",  [SaleController::class, 'store']);
+    });
+
 });

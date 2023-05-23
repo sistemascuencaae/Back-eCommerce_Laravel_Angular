@@ -101,7 +101,6 @@ Route::group(["prefix" => "ecommerce"], function ($router) {
 
     Route::group(["prefix" => "checkout"], function () {
         Route::resource("address_user", AddressUserController::class);
-        // Route::post("sale", "Ecommerce\Sale\SaleController@store");
         Route::post("sale", [SaleController::class, 'store']);
     });
 

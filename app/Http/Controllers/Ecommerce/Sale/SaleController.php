@@ -55,8 +55,8 @@ class SaleController extends Controller
     public function send_email($id)
     {
         $sale = Sale::findOrFail($id);
-        Mail::to("echodeveloper960@gmail.com")->send(new SaleMail($sale));
-        return "TODO SALIO BIEN";
+        Mail::to("juanjgsj@gmail.com")->send(new SaleMail($sale));
+        return "TODO SALIO BIEN...!!!";
     }
 
     public function show($id)

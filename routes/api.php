@@ -103,8 +103,6 @@ Route::group(["prefix" => "ecommerce"], function ($router) {
         Route::resource("address_user", AddressUserController::class);
         Route::post("sale", [SaleController::class, 'store']);
     });
-
 });
 
-// Route::get("sale_mail/{id}","Ecommerce\Sale\SaleController@send_email");
 Route::get("sale_mail/{id}", [SaleController::class, 'send_email']);

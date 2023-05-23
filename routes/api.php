@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Ecommerce\Cart\CartShopController;
 use App\Http\Controllers\Ecommerce\HomeController;
+use App\Http\Controllers\Ecommerce\Sale\SaleController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Cupones\CuponesController;
 use App\Http\Controllers\Discount\DiscountController;
@@ -101,7 +102,10 @@ Route::group(["prefix" => "ecommerce"], function ($router) {
     Route::group(["prefix" => "checkout"], function () {
         Route::resource("address_user", AddressUserController::class);
         // Route::post("sale", "Ecommerce\Sale\SaleController@store");
-        // Route::post("sale",  [SaleController::class, 'store']);
+        Route::post("sale", [SaleController::class, 'store']);
     });
 
 });
+
+// Route::get("sale_mail/{id}","Ecommerce\Sale\SaleController@send_email");
+Route::get("sale_mail/{id}", [SaleController::class, 'send_email']);

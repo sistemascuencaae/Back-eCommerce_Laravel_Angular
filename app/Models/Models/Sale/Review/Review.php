@@ -1,27 +1,24 @@
 <?php
 
-namespace App\Models\Models\Sale;
+namespace App\Models\Models\Sale\Review;
 
-use App\Models\Models\Sale\SaleAddress;
+use App\Models\Models\Product\Product;
 use App\Models\Models\Sale\SaleDetail;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Sale extends Model
+class Review extends Model
 {
     use HasFactory;
-    use SoftDeletes;
+
     protected $fillable = [
+        "product_id",
         "user_id",
-        "method_payment",
-        "currency_total",
-        "currency_payment",
-        "total",
-        "price_dolar",
-        "n_transaccion"
+        "sale_detail_id",
+        "message",
+        "rating"
     ];
 
     public function setCreatedAtAttribute($value)
@@ -36,19 +33,16 @@ class Sale extends Model
         $this->attributes["updated_at"] = Carbon::now();
     }
 
+    public function product()
+    {
+        return $this->belongsTo(Product::class);
+    }
     public function user()
     {
         return $this->belongsTo(User::class);
     }
-
-    public function sale_address()
+    public function sale_detail()
     {
-        return $this->hasOne(SaleAddress::class);
+        return $this->belongsTo(SaleDetail::class);
     }
-
-    public function sale_details()
-    {
-        return $this->hasMany(SaleDetail::class);
-    }
-    
 }

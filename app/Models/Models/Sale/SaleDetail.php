@@ -5,6 +5,8 @@ namespace App\Models\Models\Sale;
 use App\Models\Models\Product\Product;
 use App\Models\Models\Product\ProductColorSize;
 use App\Models\Models\Product\ProductSize;
+use App\Models\Models\Sale\Review\Review;
+use App\Models\Models\Sale\Sale;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -47,6 +49,11 @@ class SaleDetail extends Model
         return $this->belongsTo(User::class, "user_id");
     }
 
+    public function sale()
+    {
+        return $this->belongsTo(Sale::class);
+    }
+
     public function product()
     {
         return $this->belongsTo(Product::class);
@@ -59,5 +66,11 @@ class SaleDetail extends Model
     public function product_color_size()
     {
         return $this->belongsTo(ProductColorSize::class);
+    }
+
+    public function review()
+    {
+        //  return $this->belongsTo(Review::class); // El belongsTo se usa cuando tenemos en id de la otra tabla en en esta tabla SaleDetail
+        return $this->hasOne(Review::class); //El hasOne se usa cuando tenemos en id de la otra tabla, esta en la tabla Original en este caso en la tabla Review
     }
 }

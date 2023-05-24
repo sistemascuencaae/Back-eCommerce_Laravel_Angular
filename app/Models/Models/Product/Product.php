@@ -2,6 +2,7 @@
 
 namespace App\Models\Models\Product;
 
+use App\Models\Models\Sale\Review\Review;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -53,6 +54,11 @@ class Product extends Model
     public function sizes()
     {
         return $this->hasMany(ProductSize::class); //Relacion de uno a muchos
+    }
+
+    public function reviews()
+    {
+        return $this->hasMany(Review::class); //Relacion de uno a muchos
     }
 
     public function scopefilterProduct($query, $search, $categorie_id)

@@ -32,7 +32,7 @@ class HomeController extends Controller
                         "slug" => $product->slug,
                         "price_soles" => $product->price_soles,
                         "price_usd" => $product->price_usd,
-                        "imagen" => env("APP_URL") . "/storage/app/" . $product->imagen,
+                        "imagen" => env("APP_URL") . "storage/app/" . $product->imagen,
                     ];
                 }),
             ]);
@@ -48,7 +48,7 @@ class HomeController extends Controller
                     "id" => $slider->id,
                     "url" => $slider->url,
                     "name" => $slider->name,
-                    "imagen" => env("APP_URL") . "/storage/app/" . $slider->imagen,
+                    "imagen" => env("APP_URL") . "storage/app/" . $slider->imagen,
                 ];
             }),
             "group_categories_product" => $group_categories_product,

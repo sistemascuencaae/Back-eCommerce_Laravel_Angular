@@ -29,6 +29,8 @@ class Product extends Model
         "type_inventario",
     ];
 
+    protected $withCount = ['reviews'];
+
     public function setCreatedAtAttribute($value)
     {
         date_default_timezone_set("America/Guayaquil");
@@ -59,6 +61,11 @@ class Product extends Model
     public function reviews()
     {
         return $this->hasMany(Review::class); //Relacion de uno a muchos
+    }
+
+    public function getAvgRatingAttribute()
+    {
+        return $this->reviews->avg("rating");
     }
 
     public function scopefilterProduct($query, $search, $categorie_id)

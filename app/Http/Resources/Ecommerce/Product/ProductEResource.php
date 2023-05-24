@@ -27,6 +27,8 @@ class ProductEResource extends JsonResource
             "imagen" => env("APP_URL") . "/storage/app/" . $this->resource->imagen,
             "stock" => $this->resource->stock,
             "checked_inventario" => $this->resource->type_inventario,
+            "reviews_count" => $this->resource->reviews_count,
+            "avg_rating" => round($this->resource->avg_rating),
             "images" => $this->resource->images->map(function ($img) {
                 return [
                     "id" => $img->id,

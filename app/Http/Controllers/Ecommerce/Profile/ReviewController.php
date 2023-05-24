@@ -26,7 +26,7 @@ class ReviewController extends Controller
 
     public function store(Request $request)
     {
-        // $request->request->add(["user_id" => auth('api')->user()->id]);
+        $request->request->add(["user_id" => auth('api')->user()->id]);
         $review = Review::create($request->all());
 
         return response()->json(["message" => 200, "review" => $review]);

@@ -7,6 +7,7 @@ use App\Http\Controllers\Ecommerce\Sale\SaleController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Cupones\CuponesController;
 use App\Http\Controllers\Discount\DiscountController;
+use App\Http\Controllers\Ecommerce\Cart\WishListController;
 use App\Http\Controllers\Ecommerce\Client\AddressUserController;
 use App\Http\Controllers\Ecommerce\Profile\ReviewController;
 use App\Http\Controllers\JWTController;
@@ -111,6 +112,8 @@ Route::group(["prefix" => "ecommerce"], function ($router) {
         Route::post("profile_update", [ProfileController::class, 'profile_update']);
         Route::resource("reviews", ReviewController::class);
     });
+
+    Route::resource("wishlist", WishListController::class);
 });
 
 Route::get("sale_mail/{id}", [SaleController::class, 'send_email']);

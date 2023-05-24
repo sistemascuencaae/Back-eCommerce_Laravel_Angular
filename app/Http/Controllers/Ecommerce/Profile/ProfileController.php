@@ -7,6 +7,7 @@ use App\Http\Resources\Ecommerce\Sale\SaleOCollection;
 use App\Models\Models\Client\AddressUser;
 use App\Models\Models\Sale\Sale;
 use App\Models\Models\Sale\SaleDetail;
+use App\Models\Models\Sale\Wishlist\Wishlist;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -27,7 +28,7 @@ class ProfileController extends Controller
             $q->where("user_id", $user->id);
         })->with(["review", "product", "sale"])->orderBy("sale_id", "desc")->get();
 
-        // $wishlists = Wishlist::where("user_id",auth('api')->user()->id)->orderBy("id","desc")->get();
+        // $wishlists = Wishlist::where("user_id", auth('api')->user()->id)->orderBy("id", "desc")->get();
         return response()->json([
             "user" => [
                 "id" => $user->id,
@@ -70,24 +71,23 @@ class ProfileController extends Controller
                     "review" => $sale_detail->review,
                 ];
             }),
-            // "wishlists" => $wishlists->map(function($wishlist){
+            // "wishlists" => $wishlists->map(function ($wishlist) {
             //     return [
             //         "id" => $wishlist->id,
             //         "user" => [
             //             "id" => $wishlist->client->id,
-            //             "name" =>$wishlist->client->name,
+            //             "name" => $wishlist->client->name,
             //         ],
             //         "product" => [
-            //             "id" =>  $wishlist->product->id,
-            //             "title" => $wishlist->product->title,
+            //             "id" => $wishlist->product->id,
+            //             "tittle" => $wishlist->product->tittle,
             //             "slug" => $wishlist->product->slug,
             //             "price_soles" => $wishlist->product->price_soles,
             //             "price_usd" => $wishlist->product->price_usd,
-            //             "imagen" =>  env("APP_URL")."storage/".$wishlist->product->imagen,
+            //             "imagen" => env("APP_URL") . "storage/app/" . $wishlist->product->imagen,
             //         ],
             //     ];
             // }),
-
         ]);
     }
 

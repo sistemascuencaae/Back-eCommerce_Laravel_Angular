@@ -132,8 +132,21 @@ class HomeController extends Controller
 
         $review = $request->review;
 
+        $min_price = $request->min_price;
+        $max_price = $request->max_price;
+
+        $size_id = $request->size_id;
+        $color_id = $request->color_id;
+
         // ->inRandomOrder() withCount("reviews")
-        $products = Product::filterAdvance($categories, $review)
+        $products = Product::filterAdvance(
+            $categories,
+            $review,
+            $min_price,
+            $max_price,
+            $size_id,
+            $color_id
+        )
             ->get();
 
         return response()->json([

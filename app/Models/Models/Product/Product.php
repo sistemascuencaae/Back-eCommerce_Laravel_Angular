@@ -88,8 +88,15 @@ class Product extends Model
         return $query;
     }
 
-    public function scopefilterAdvance($query, $categories, $review)
-    {
+    public function scopefilterAdvance(
+        $query,
+        $categories,
+        $review,
+        $min_price,
+        $max_price,
+        $size_id,
+        $color_id
+    ) {
         if (sizeof($categories) > 0) { // sizeof() significa si tiene un tamñao mayor a cero
             $query->whereIn("categorie_id", $categories); // wherwIn para buscar entre varios elementos
         }
@@ -97,6 +104,24 @@ class Product extends Model
         if ($review) {
             $query->whereHas("reviews", function ($q) use ($review) {
                 ($q)->where("rating", $review);
+            });
+        }
+
+        if ($min_price > 0 && $max_price > 0) {
+            $query->whereBetween("price_soles", [$min_price, $max_price]);
+        }
+
+        if ($size_id) {
+            $query->whereHas("sizes", function ($q) use ($size_id) {
+                $q->where("name", "like", "%" . $size_id . "%");
+            });
+        }
+
+        if ($color_id) {
+            $query->whereHas("sizes", function ($q) use ($color_id) {
+                $q->whereHas("product_size_colors", function ($qt) use ($color_id) {
+                    $qt->where("product_color_id", $color_id);
+                });
             });
         }
 

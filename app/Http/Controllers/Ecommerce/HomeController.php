@@ -138,6 +138,8 @@ class HomeController extends Controller
         $size_id = $request->size_id;
         $color_id = $request->color_id;
 
+        $search_product = $request->search_product;
+
         // ->inRandomOrder() withCount("reviews")
         $products = Product::filterAdvance(
             $categories,
@@ -145,7 +147,8 @@ class HomeController extends Controller
             $min_price,
             $max_price,
             $size_id,
-            $color_id
+            $color_id,
+            $search_product
         )
             ->get();
 

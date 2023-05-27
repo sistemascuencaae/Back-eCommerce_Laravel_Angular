@@ -95,7 +95,8 @@ class Product extends Model
         $min_price,
         $max_price,
         $size_id,
-        $color_id
+        $color_id,
+        $search_product
     ) {
         if (sizeof($categories) > 0) { // sizeof() significa si tiene un tamñao mayor a cero
             $query->whereIn("categorie_id", $categories); // wherwIn para buscar entre varios elementos
@@ -123,6 +124,10 @@ class Product extends Model
                     $qt->where("product_color_id", $color_id);
                 });
             });
+        }
+
+        if ($search_product) {
+            $query->where("tittle", "like", "%" . $search_product . "%");
         }
 
         return $query;

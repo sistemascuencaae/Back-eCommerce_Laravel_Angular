@@ -2,6 +2,8 @@
 
 namespace App\Models\Models\Product;
 
+use App\Models\Models\Product\ProductColor;
+use App\Models\Models\Product\ProductSize;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;

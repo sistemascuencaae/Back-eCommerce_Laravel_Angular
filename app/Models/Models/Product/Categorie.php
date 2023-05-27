@@ -2,6 +2,7 @@
 
 namespace App\Models\Models\Product;
 
+use App\Models\Models\Discount\DiscountCategorie;
 use App\Models\Models\Product\Product;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -29,5 +30,10 @@ class Categorie extends Model
     public function products()
     {
         return $this->hasMany(Product::class);
+    }
+
+    public function discountcategories()
+    {
+        return $this->hasMany(DiscountCategorie::class);
     }
 }

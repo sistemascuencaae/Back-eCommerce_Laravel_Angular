@@ -9,6 +9,18 @@ class ProductEResource extends JsonResource
     public function toArray($request)
     {
         // logica de descuento
+        $discount_g = null;
+        if ($this->resource->discount_p && $this->resource->discount_c) {
+            $discount_g = $this->resource->discount_p;
+        } else {
+            if ($this->resource->discount_p && !$this->resource->discount_c) {
+                $discount_g = $this->resource->discount_p;
+            } else {
+                if (!$this->resource->discount_p && $this->resource->discount_c) {
+                    $discount_g = $this->resource->discount_c;
+                }
+            }
+        }
         return [
             "id" => $this->id,
             "tittle" => $this->resource->tittle,
@@ -24,16 +36,19 @@ class ProductEResource extends JsonResource
             "price_usd" => $this->resource->price_usd,
             "resumen" => $this->resource->resumen,
             "description" => $this->resource->description,
-            "imagen" => env("APP_URL") . "/storage/app/" . $this->resource->imagen,
+            "imagen" => env("APP_URL") . "storage/app/" . $this->resource->imagen,
             "stock" => $this->resource->stock,
             "checked_inventario" => $this->resource->type_inventario,
             "reviews_count" => $this->resource->reviews_count,
             "avg_rating" => round($this->resource->avg_rating),
+            // "discount_p" => $this->resource->discount_p,
+            // "discount_c" => $this->resource->discount_c,
+            "discount_g" => $discount_g,
             "images" => $this->resource->images->map(function ($img) {
                 return [
                     "id" => $img->id,
                     "file_name" => $img->file_name,
-                    "imagen" => env("APP_URL") . "/storage/app/" . $img->imagen,
+                    "imagen" => env("APP_URL") . "storage/app/" . $img->imagen,
                     "size" => $img->size,
                     "type" => $img->type,
                 ];

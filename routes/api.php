@@ -95,7 +95,9 @@ Route::group(['prefix' => 'descuentos'], function ($router) {
 
 Route::group(["prefix" => "ecommerce"], function ($router) {
     Route::get("home", [HomeController::class, 'home']);
+    Route::post("list-products", [HomeController::class, 'list_product']);
     Route::get("detail-product/{slug}", [HomeController::class, 'detail_product']);
+    Route::get("config_initial_filter", [HomeController::class, 'config_initial_filter']);
 
     Route::group(["prefix" => "cart"], function () {
         Route::resource("add", CartShopController::class);

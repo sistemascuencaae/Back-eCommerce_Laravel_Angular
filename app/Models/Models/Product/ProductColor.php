@@ -2,6 +2,7 @@
 
 namespace App\Models\Models\Product;
 
+use App\Models\Models\Product\ProductColorSize;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -28,4 +29,11 @@ class ProductColor extends Model
         date_default_timezone_set("America/Guayaquil");
         $this->attributes["updated_at"] = Carbon::now();
     }
+
+    public function product_color_sizes()
+    {
+        return $this->hasMany(ProductColorSize::class);
+    }
+
+
 }

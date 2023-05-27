@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\Ecommerce\Product\ProductEResource;
 use App\Models\Models\Product\Categorie;
 use App\Models\Models\Product\Product;
+use App\Models\Models\Product\ProductColor;
+use App\Models\Models\Product\ProductColorSize;
+use App\Models\Models\Product\ProductSize;
 use App\Models\Models\Sale\Review\Review;
 use App\Models\Slider;
 use Illuminate\Http\Request;
@@ -28,6 +31,20 @@ class HomeController extends Controller
                 "id" => $categorie->id,
                 "name" => $categorie->name,
                 "products" => $products->map(function ($product) {
+
+                    $discount_g = null;
+                    if ($product->discount_p && $product->discount_c) {
+                        $discount_g = $product->discount_p;
+                    } else {
+                        if ($product->discount_p && !$product->discount_c) {
+                            $discount_g = $product->discount_p;
+                        } else {
+                            if (!$product->discount_p && $product->discount_c) {
+                                $discount_g = $product->discount_c;
+                            }
+                        }
+                    }
+
                     return [
                         "id" => $product->id,
                         "tittle" => $product->tittle,
@@ -37,6 +54,7 @@ class HomeController extends Controller
                         "imagen" => env("APP_URL") . "storage/app/" . $product->imagen,
                         "reviews_count" => $product->reviews_count,
                         "avg_rating" => round($product->avg_rating),
+                        "discount_g" => $discount_g,
                     ];
                 }),
             ]);
@@ -109,66 +127,45 @@ class HomeController extends Controller
 
     public function list_product(Request $request)
     {
-        // $categories = $request->categories;
-        // $review = $request->review;
-        // $min_price = $request->min_price;
-        // $max_price = $request->max_price;
-        // $size_id = $request->size_id;
-        // $color_id = $request->color_id;
-        // $search_product = $request->search_product;
-        // // ->inRandomOrder() withCount("reviews")->
-        // $products = Product::filterAdvance($categories,$review,$min_price,$max_price,$size_id,$color_id,$search_product)->get();
 
-        // return response()->json(["products" => $products->map(function($product){
-        //     return  ProductEResource::make($product);
-        // })]);
+        $categories = $request->categories;
 
+        $review = $request->review;
+
+        // ->inRandomOrder() withCount("reviews")
+        $products = Product::filterAdvance($categories, $review)
+            ->get();
+
+        return response()->json([
+            "products" => $products->map(function ($product) {
+                return ProductEResource::make($product);
+            })
+        ]);
     }
 
     public function config_initial_filter()
     {
-        // $categories = Categorie::withCount("products")->orderBy("id","desc")->get();
+        $categories = Categorie::WithCount("products")->orderBy("id", "desc")->get();
 
-        // $reviews = Review::select("rating",DB::raw("count(*) as total"))->groupBy("rating")->orderBy("id","desc")->get();
+        $reviews = Review::select("rating", DB::raw("count(*) as total"))->groupBy("rating")
+            // ->orderBy("id", "desc")
+            ->get();
 
-        // $sizes = ProductSize::select("name",DB::raw("count(*) as total"))->groupBy("name")->orderBy("id","desc")->get();
+        $sizes = ProductSize::select("name", DB::raw("count(*) as total"))->groupBy("name")
+            // ->orderBy("id", "desc")
+            ->get();
 
-        // $colores = ProductColor::withCount("product_color_sizes")->orderBy("id","desc")->get();
-        // return response()->json(["colores" => $colores,"sizes" => $sizes, "categories" => $categories , "reviews" => $reviews]);
+        $colores = ProductColor::withCount("product_color_sizes")
+            ->orderBy("id", "desc")
+            ->get();
+
+        return response()->json([
+            "message" => "CONFIG_INITIAL_FILTER",
+            "colores" => $colores,
+            "sizes" => $sizes,
+            "categories" => $categories,
+            "reviews" => $reviews,
+        ]);
     }
 
 }
-// public function detail_product($slug_product)
-// {
-//     $product = Product::where("slug", $slug_product)->first();
-//     if (!$product) {
-//         return response()->json(["message" => 403]);
-//     }
-//     $product_relateds = Product::where("id", "<>", $product->id)->where("categorie_id", $product->categorie_id)->orderBy("id", "asc")->get();
-
-//     $reviews = Review::where("product_id", $product->id)->orderBy("id", "desc")->paginate(13);
-
-//     $reviews_count = Review::select("rating", DB::raw("count(*) as total"))->where("product_id", $product->id)->groupBy("rating")->orderBy("id", "desc")->get();
-
-//     return response()->json([
-//         "message" => 200,
-//         "product_detail" => ProductEResource::make($product),
-//         "product_relateds" => $product_relateds->map(function ($product) {
-//             return ProductEResource::make($product);
-//         }),
-//         "reviews" => $reviews->map(function ($review) {
-//             return [
-//                 "id" => $review->id,
-//                 "user" => [
-//                     "id" => $review->user->id,
-//                     "full_name" => $review->user->name . '  ' . $review->user->surname,
-//                     "avatar" => env("APP_URL") . "storage/app/public/" . $review->user->avatar,
-//                 ],
-//                 "message" => $review->message,
-//                 "rating" => $review->rating,
-//                 "created_at" => $review->created_at->format("Y/m/d"),
-//             ];
-//         }),
-//         "reviews_count" => $reviews_count,
-//     ]);
-// }

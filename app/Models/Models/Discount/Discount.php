@@ -2,6 +2,8 @@
 
 namespace App\Models\Models\Discount;
 
+use App\Models\Models\Discount\DiscountCategorie;
+use App\Models\Models\Discount\DiscountProduct;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;

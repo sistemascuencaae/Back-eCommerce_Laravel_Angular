@@ -2,6 +2,10 @@
 
 namespace App\Models\Models\Product;
 
+use App\Models\Models\Discount\DiscountProduct;
+use App\Models\Models\Product\Categorie;
+use App\Models\Models\Product\ProductImage;
+use App\Models\Models\Product\ProductSize;
 use App\Models\Models\Sale\Review\Review;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -63,6 +67,11 @@ class Product extends Model
         return $this->hasMany(Review::class); //Relacion de uno a muchos
     }
 
+    public function discountsproducts()
+    {
+        return $this->hasMany(DiscountProduct::class);
+    }
+
     public function getAvgRatingAttribute()
     {
         return $this->reviews->avg("rating");
@@ -79,4 +88,48 @@ class Product extends Model
         return $query;
     }
 
+    public function scopefilterAdvance($query, $categories, $review)
+    {
+        if (sizeof($categories) > 0) { // sizeof() significa si tiene un tamñao mayor a cero
+            $query->whereIn("categorie_id", $categories); // wherwIn para buscar entre varios elementos
+        }
+
+        if ($review) {
+            $query->whereHas("reviews", function ($q) use ($review) {
+                ($q)->where("rating", $review);
+            });
+        }
+
+        return $query;
+    }
+
+    public function getDiscountPAttribute()
+    {
+        $response = null;
+        date_default_timezone_set("America/Guayaquil");
+        foreach ($this->discountsproducts as $key => $discounts) {
+            // if ($discounts->discount->state == 1) {
+            //     if (Carbon::now()->between($discounts->discount->start_date, $discounts->discount->end_date)) {
+            //         $response = $discounts->discount;
+            //         break;
+            //     }
+            // }
+        }
+        return $response;
+    }
+
+    public function getDiscountCAttribute()
+    {
+        $response = null;
+        date_default_timezone_set("America/Guayaquil");
+        foreach ($this->categorie->discountcategories as $key => $discounts) {
+            // if ($discounts->discount->state == 'null') {
+            //     if (Carbon::now()->between($discounts->discount->start_date, $discounts->discount->end_date)) {
+            //         $response = $discounts->discount;
+            //         break;
+            //     }
+            // }
+        }
+        return $response;
+    }
 }

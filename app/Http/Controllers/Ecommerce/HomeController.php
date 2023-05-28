@@ -18,15 +18,18 @@ class HomeController extends Controller
 {
     public function home()
     {
-
         $sliders = Slider::orderBy("id", "desc")->get();
 
-        $categories = Categorie::orderBy("id", "desc")->take(4)->get();
+        $categories = Categorie::withCount("products")
+            // ->having("products_count", ">", 0)
+            ->orderBy("id", "desc")
+            ->take(4) //take toma cuatro categorias para mostrar en top ranking del ecommerce client
+            ->get();
 
         $group_categories_product = collect([]);
         // dd($categories);
         foreach ($categories as $key => $categorie) {
-            $products = $categorie->products->take(3);
+            $products = $categorie->products->take(3); // take toma tres productos
             $group_categories_product->push([
                 "id" => $categorie->id,
                 "name" => $categorie->name,

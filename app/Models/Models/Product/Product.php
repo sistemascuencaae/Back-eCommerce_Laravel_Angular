@@ -98,7 +98,7 @@ class Product extends Model
         $color_id,
         $search_product
     ) {
-        if (sizeof($categories) > 0) { // sizeof() significa si tiene un tamñao mayor a cero
+        if ($categories && sizeof($categories) > 0) { // sizeof() significa si tiene un tamñao mayor a cero
             $query->whereIn("categorie_id", $categories); // wherwIn para buscar entre varios elementos
         }
 

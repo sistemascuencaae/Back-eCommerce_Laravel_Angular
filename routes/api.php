@@ -4,6 +4,7 @@ use App\Http\Controllers\Ecommerce\Cart\CartShopController;
 use App\Http\Controllers\Ecommerce\HomeController;
 use App\Http\Controllers\Ecommerce\Profile\ProfileController;
 use App\Http\Controllers\Ecommerce\Sale\SaleController;
+use App\Http\Controllers\Sales\SalesController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Cupones\CuponesController;
 use App\Http\Controllers\Discount\DiscountController;
@@ -119,3 +120,6 @@ Route::group(["prefix" => "ecommerce"], function ($router) {
 });
 
 Route::get("sale_mail/{id}", [SaleController::class, 'send_email']);
+
+// Route::post("sales/all","Sales\SalesController@sale_all");
+Route::post("sales/all", [SalesController::class, 'sale_all']);

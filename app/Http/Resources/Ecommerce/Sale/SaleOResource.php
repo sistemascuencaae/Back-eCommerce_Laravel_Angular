@@ -10,10 +10,10 @@ class SaleOResource extends JsonResource
     {
         return [
             "id" => $this->resource->id,
-            // "user" => [
-            //     "id" => $this->resource->user->id,
-            //     "full_name" => $this->resource->user->name . ' ' . $this->resource->user->surname,
-            // ],
+            "user" => [
+                "id" => $this->resource->user->id,
+                "full_name" => $this->resource->user->name . ' ' . $this->resource->user->surname,
+            ],
             "method_payment" => $this->resource->method_payment,
             "currency_total" => $this->resource->currency_total,
             "currency_payment" => $this->resource->currency_payment,

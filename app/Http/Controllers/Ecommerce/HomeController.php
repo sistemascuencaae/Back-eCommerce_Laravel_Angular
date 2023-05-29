@@ -54,6 +54,7 @@ class HomeController extends Controller
                         "slug" => $product->slug,
                         "price_soles" => $product->price_soles,
                         "price_usd" => $product->price_usd,
+                        // "imagen" => env("APP_URL") . "storage/app/" . $product->imagen,
                         "imagen" => env("APP_URL") . "storage/app/" . $product->imagen,
                         "reviews_count" => $product->reviews_count,
                         "avg_rating" => round($product->avg_rating),
@@ -117,7 +118,8 @@ class HomeController extends Controller
                     "user" => [
                         "id" => $review->user->id,
                         "full_name" => $review->user->name . '  ' . $review->user->surname,
-                        "avatar" => env("APP_URL") . "storage/app/public/" . $review->user->avatar,
+                        // "avatar" => env("APP_URL") . "storage/app/public/" . $review->user->avatar,
+                        "avatar" => env("APP_URL") . "storage/app/" . $review->user->avatar,
                     ],
                     "message" => $review->message,
                     "rating" => $review->rating,

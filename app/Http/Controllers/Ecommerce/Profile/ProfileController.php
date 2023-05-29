@@ -38,7 +38,8 @@ class ProfileController extends Controller
                 "birthday" => $user->birthday ? Carbon::parse($user->birthday)->format("Y-m-d") : NULL,
                 "gender" => $user->gender,
                 // IMAGEN DEL USUARIO EN PROFILE-INFORMATION
-                "avatar" => $user->avatar ? env("APP_URL") . "storage/app/public/" . $user->avatar : null,
+                // "avatar" => $user->avatar ? env("APP_URL") . "storage/app/public/" . $user->avatar : null,
+                "avatar" => $user->avatar ? env("APP_URL") . "storage/" . $user->avatar : null,
                 "phone" => $user->phone,
             ],
             "address" => $address->map(function ($addres) {
@@ -64,6 +65,7 @@ class ProfileController extends Controller
                     "product" => [
                         "id" => $sale_detail->product_id,
                         "tittle" => $sale_detail->product->tittle,
+                        // "imagen" => env("APP_URL") . "storage/app/" . $sale_detail->product->imagen,
                         "imagen" => env("APP_URL") . "storage/app/" . $sale_detail->product->imagen,
                     ],
                     "total" => $sale_detail->total,

@@ -36,6 +36,7 @@ class ProductEResource extends JsonResource
             "price_usd" => $this->resource->price_usd,
             "resumen" => $this->resource->resumen,
             "description" => $this->resource->description,
+            // "imagen" => env("APP_URL") . "storage/app/" . $this->resource->imagen,
             "imagen" => env("APP_URL") . "storage/app/" . $this->resource->imagen,
             "stock" => $this->resource->stock,
             "checked_inventario" => $this->resource->type_inventario,
@@ -48,6 +49,7 @@ class ProductEResource extends JsonResource
                 return [
                     "id" => $img->id,
                     "file_name" => $img->file_name,
+                    // "imagen" => env("APP_URL") . "storage/app/" . $img->imagen,
                     "imagen" => env("APP_URL") . "storage/app/" . $img->imagen,
                     "size" => $img->size,
                     "type" => $img->type,

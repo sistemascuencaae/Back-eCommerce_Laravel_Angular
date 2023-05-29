@@ -33,7 +33,8 @@ class ProductCResouce extends JsonResource
             "resumen" => $this->resource->resumen,
             "description" => $this->resource->description,
             "state" => $this->resource->state,
-            "imagen" => env("APP_URL") . "/storage/app/" . $this->resource->imagen,
+            // "imagen" => env("APP_URL") . "/storage/app/" . $this->resource->imagen,
+            "imagen" => env("APP_URL") . "storage/app/" . $this->resource->imagen,
             // http://192.168.1.105/Back-eCommerce_Laravel_Angular/storage/app/productos/f0HbE16dLVAVvvjR9lXPpABIr3ROl3YHb9NAu7vp.png
             "stock" => $this->resource->stock,
             "checked_inventario" => $this->resource->type_inventario,
@@ -42,6 +43,7 @@ class ProductCResouce extends JsonResource
                 return [
                     "id" => $img->id,
                     "file_name" => $img->file_name,
+                    // "imagen" => env("APP_URL") . "storage/app/" . $img->imagen,
                     "imagen" => env("APP_URL") . "storage/app/" . $img->imagen,
                     "size" => $img->size,
                     "type" => $img->type,

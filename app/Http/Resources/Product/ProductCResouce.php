@@ -42,7 +42,7 @@ class ProductCResouce extends JsonResource
                 return [
                     "id" => $img->id,
                     "file_name" => $img->file_name,
-                    "imagen" => env("APP_URL") . "/storage/app/" . $img->imagen,
+                    "imagen" => env("APP_URL") . "storage/app/" . $img->imagen,
                     "size" => $img->size,
                     "type" => $img->type,
                 ];
